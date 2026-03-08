@@ -10,6 +10,11 @@ namespace HotelsR4U.Data
     public class Room
     {
         public int RoomID { get; set; }
+
+        public int HotelID { get; set; }
+        [ForeignKey (nameof (HotelID))]
+        public virtual Hotel Hotel { get; set; }
+
         public string RoomNumber { get; set; }
         public string RoomType { get; set; }
         public string RoomSize { get; set; }

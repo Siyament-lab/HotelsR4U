@@ -10,9 +10,6 @@ namespace HotelsR4U.Data
     public class BookingService
     {
         public int BookingServiceID { get; set; }
-        public int HotelID { get; set; }
-        [ForeignKey(nameof(HotelID))]
-        public virtual Hotel Hotel { get; set; }
         public int GuestID { get; set; }
         [ForeignKey(nameof(GuestID))]
         public virtual Guest Guest { get; set; }

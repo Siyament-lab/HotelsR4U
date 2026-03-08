@@ -19,19 +19,20 @@ namespace HotelsR4U.Data
         public DbSet<RoomPrice> RoomPrices { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
 
-        //****Anteckningar****
-        /// <summary>
+        #region Anteckningar viktigt
+        
         /// *---Viktigt------Viktigt------Viktigt------Viktigt---
         ///Tom konstruktor, konstruktor med "options" och metoden "OnConfiguring"
         ///är mycket användbara för att kunna konfigurera och ansluta till databasen på olika sätt.
-        /// </summary>
+        
         //EN tom konstruktor behövs för att kunna ha möjlighet till migrering
         //till databasen. Alltså du får möjlighet att skapa databasen stegvis.
         //Konstruktor med alternativ (Options) som tar in inställningar
         //Från appens konfiguration, som i sin tur kan innehålla anslutningssträngar och andra inställningar.
         //Metoden "ONConfiguring" används första gången applikationen körs för att
         //Koppla databasen till rätt server.
-
+        
+        #endregion
         public ApplicationDbContext ()
         { 
         }
