@@ -15,7 +15,7 @@ namespace HotelsR4U
             //SKapar en DbOptionsBuilder som hjälper till att konfigurera  och ansluta till databasen.
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext> ();
 
-            //Hämstar anslutningssträngen från "Appsettings.json".
+            //Hämtar anslutningssträngen från "Appsettings.json".
             var connectionString = config.GetConnectionString ("DefaultConnection");
 
             //Sedan använder ansl.strängen för att konfigurera SQL server som databas för ApplicationDbContext.

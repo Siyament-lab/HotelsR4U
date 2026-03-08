@@ -4,6 +4,7 @@ using HotelsR4U.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelsR4U.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260306165705_FixCascadePaths")]
+    partial class FixCascadePaths
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,11 +80,8 @@ namespace HotelsR4U.Migrations
                     b.Property<int>("GuestID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HotelID")
+                    b.Property<int>("HotelID")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
 
                     b.Property<int>("RoomID")
                         .HasColumnType("int");
@@ -211,9 +211,6 @@ namespace HotelsR4U.Migrations
                     b.Property<bool>("ExtraBed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("HotelID")
-                        .HasColumnType("int");
-
                     b.Property<string>("RoomNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -227,8 +224,6 @@ namespace HotelsR4U.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoomID");
-
-                    b.HasIndex("HotelID");
 
                     b.ToTable("Rooms");
                 });
@@ -271,10 +266,11 @@ namespace HotelsR4U.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("HotelsR4U.Data.Hotel", null)
+                    b.HasOne("HotelsR4U.Data.Hotel", "Hotel")
                         .WithMany("Bookings")
                         .HasForeignKey("HotelID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("HotelsR4U.Data.Room", "Room")
                         .WithMany("Bookings")
@@ -291,6 +287,8 @@ namespace HotelsR4U.Migrations
                     b.Navigation("AppliedPrice");
 
                     b.Navigation("Guest");
+
+                    b.Navigation("Hotel");
 
                     b.Navigation("Room");
                 });
@@ -326,17 +324,6 @@ namespace HotelsR4U.Migrations
                         .IsRequired();
 
                     b.Navigation("BookingService");
-                });
-
-            modelBuilder.Entity("HotelsR4U.Data.Room", b =>
-                {
-                    b.HasOne("HotelsR4U.Data.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Hotel");
                 });
 
             modelBuilder.Entity("HotelsR4U.Data.RoomPrice", b =>
