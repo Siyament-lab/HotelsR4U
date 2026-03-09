@@ -24,5 +24,34 @@ namespace HotelsR4U.Data
         public int RoomID { get; set; }
         [ForeignKey(nameof(RoomID))]
         public virtual Room Room { get; set; }
+
+        //Skapar en prislista baserad på rum-listan
+        public static List<RoomPrice> ActualRoomPrices ( List<Room> rooms )
+        {
+            return rooms.Select(r => new RoomPrice
+            {
+                RoomID = r.RoomID,
+                ValidFrom = DateTime.Now,
+                ValidTo = DateTime.Now.AddYears(1),
+
+                // Sätter priset baserat på rumstypen, och extra säng tillägg
+                PricePerNight = r.RoomType == "Suite" ? 2000m :
+                r.RoomType == "Double" ? 1200m:900m,
+                ExtraBedPrice = r.ExtraBed ? 300m : 0m,
+
+            }).ToList ();
+        }
+        //SKickar och sparar priser i SQL servern
+        public static void OurRoomPrices ( ApplicationDbContext dbContext )
+        {
+            if (!dbContext.RoomPrices.Any ())
+            {
+                var allRooms = dbContext.Rooms.ToList ();
+                var prices = ActualRoomPrices (allRooms);
+                dbContext.RoomPrices.AddRange (prices);
+                dbContext.SaveChanges ();
+
+            }
+        }
     }
 }
