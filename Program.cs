@@ -8,23 +8,22 @@ namespace HotelsR4U
     {
         static void Main ( string[] args )
         {
-            var builder = new ConfigurationBuilder ()
-                .AddJsonFile ("appsettings.json", true, true);
-            var config = builder.Build();
+            //Skapar instans av DbContextOptionsBuilder och hämtar konfigurationen från DataBaseConfig-klassen.
+            var options = DataBaseConfig.GetOptions ();
 
-            //SKapar en DbOptionsBuilder som hjälper till att konfigurera  och ansluta till databasen.
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext> ();
-
-            //Hämtar anslutningssträngen från "Appsettings.json".
-            var connectionString = config.GetConnectionString ("DefaultConnection");
-
-            //Sedan använder ansl.strängen för att konfigurera SQL server som databas för ApplicationDbContext.
-            optionsBuilder.UseSqlServer (connectionString);
-
-            using (var dbContext = new ApplicationDbContext (optionsBuilder.Options))
+            using (var dbContext = new ApplicationDbContext (options))
             {
                 dbContext.Database.Migrate ();
+
+                //Anropar metoder från klasserna och skapar entiteter i databasen om de inte finns.
+                //Logiken sköts innuti klasserna.
+                Hotel.OurHotels (dbContext);      
+                Room.OurRooms (dbContext);       
+                RoomPrice.OurRoomPrices (dbContext);
+
+
             }
         }
     }
 }
+
