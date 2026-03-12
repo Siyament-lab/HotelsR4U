@@ -43,7 +43,6 @@ namespace HotelsR4U.Data
         }
         //Metod för att begränsa borttagning av pågående bokningar om man väljer ta bort ett hotel/kund/rum som har bokningar.
         //Detta görs genom att ändra "DeleteBehavior" till "Restrict" för alla relationer i modellen.
-
         protected override void OnModelCreating ( ModelBuilder modelBuilder )
         {
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -57,7 +56,8 @@ namespace HotelsR4U.Data
         {
             if(!optionsBuilder.IsConfigured)
             {
-                //Behövde lägga till "TrustedServerCertificate=True" för att förbise SQL;s nya säkerhetsrutiner. Nu är min lokala server pålitlig.
+                //Behövde lägga till "TrustServerCertificate=True" för att förbise SQL;s nya säkerhetsrutiner.
+                //Nu är min lokala server pålitlig.
                 optionsBuilder.UseSqlServer(@"Server=.;Database=hotelsR4U;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }

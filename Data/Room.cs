@@ -25,7 +25,7 @@ namespace HotelsR4U.Data
         //Navigeringsegenskap för bokningar som hör till rummet
         public virtual ICollection<BookingService> Bookings { get; set; }
 
-        // Metod som skapar 4 rum per hotell
+        // Metod som skapar 6 rum per hotell
         public static List<Room> HotelRooms ( List<Hotel> hotels )
         {
             var allRooms = new List<Room> ();
@@ -52,7 +52,7 @@ namespace HotelsR4U.Data
             }
             return allRooms;
         }
-        //SKickar och sparar Rum-listan i SQL servern
+        //SKickar och sparar Rum-listan i SQL servern db
         public static void OurRooms (ApplicationDbContext dbContext )
         {
             if (!dbContext.Rooms.Any ())
