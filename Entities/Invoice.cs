@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HotelsR4U.Data
+namespace HotelsR4U.Entities
 {
     public class Invoice
     {
@@ -13,9 +14,9 @@ namespace HotelsR4U.Data
         //Förfalludatum
         public DateTime DueDate { get; set; }
 
-        public int BookingServiceID { get; set; }
-        [ForeignKey(nameof(BookingServiceID))]
-        public virtual BookingService BookingService { get; set; }
+        public int BookingID { get; set; }
+        [ForeignKey(nameof(BookingID))]
+        public Booking Booking { get; set; } = null!;
 
     }
 }

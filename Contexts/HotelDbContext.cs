@@ -1,18 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelsR4U.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
-namespace HotelsR4U.Data
+
+namespace HotelsR4U.Contexts
+
 {
-    //Skapar vår app databas(Db)kontext som är en klass som ärver från "DbContext" i Entity Framework Core.
-    public class ApplicationDbContext : DbContext
+    //Skapar vår app databas(Db)kontext som är en klass som ärver från "DbContext" från Entity Framework Core.
+    public class HotelDbContext : DbContext
     {
         //Skapar databas sett (Tabeller i SQL server) för våra modeller/klasser som vill ha i databasen.
         public DbSet<Guest> Guests { get; set; }
-        public DbSet<BookingService> BookingService { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -33,11 +32,11 @@ namespace HotelsR4U.Data
         //Koppla databasen till rätt server.
         
         #endregion
-        public ApplicationDbContext ()
+        public HotelDbContext ()
         { 
         }
         //Konstruktor med Options
-        public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) 
+        public HotelDbContext (DbContextOptions<HotelDbContext> options) 
             : base(options)
         {
         }
@@ -50,15 +49,24 @@ namespace HotelsR4U.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+            // Konvertera enum "BookingStatus" till int i databasen.
+            modelBuilder.Entity<Booking>()
+                .Property(b => b.Status)
+                .HasConversion<int>();
         }
 
         // Metoden "OnConfiguring".
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring ( DbContextOptionsBuilder optionsBuilder )
         {
-            if(!optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
-                //Behövde lägga till "TrustedServerCertificate=True" för att förbise SQL;s nya säkerhetsrutiner. Nu är min lokala server pålitlig.
-                optionsBuilder.UseSqlServer(@"Server=.;Database=hotelsR4U;Trusted_Connection=True;TrustServerCertificate=True;");
+                var configuration = new ConfigurationBuilder ()
+                    .SetBasePath (Directory.GetCurrentDirectory ())
+                    .AddJsonFile ("appsettings.json")
+                    .Build ();
+
+                var connectionString = configuration.GetConnectionString ("DefaultConnection");
+                optionsBuilder.UseSqlServer (connectionString);
             }
         }
     }
