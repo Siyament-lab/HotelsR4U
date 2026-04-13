@@ -1,4 +1,5 @@
 ﻿using HotelsR4U.Contexts;
+using HotelsR4U.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelsR4U
@@ -10,8 +11,9 @@ namespace HotelsR4U
             using (var dbContext = new HotelDbContext ())
             {
                 dbContext.Database.Migrate ();
+                SeedRunner.Run (dbContext);
 
-                Console.WriteLine ("Databasen skapad!");
+                Console.WriteLine ();
             }
 
             Console.ReadKey ();

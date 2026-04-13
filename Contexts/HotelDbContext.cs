@@ -53,6 +53,7 @@ namespace HotelsR4U.Contexts
             modelBuilder.Entity<Booking>()
                 .Property(b => b.Status)
                 .HasConversion<int>();
+
         }
 
         // Metoden "OnConfiguring".
