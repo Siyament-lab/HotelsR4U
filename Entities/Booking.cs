@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using HotelsR4U.Enums;
 
 
@@ -20,9 +21,10 @@ namespace HotelsR4U.Entities
         //Lägger till en egenskap för extrabäddar.
         public int ExtraBedRequested { get; set; }
 
+        [Required]
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        
+
         public DateTime BookingDate { get; set; } = DateTime.Now;
         public DateTime? PaymentDate { get; set; }
         public BookingStatus Status { get; set; } = BookingStatus.Pending;
