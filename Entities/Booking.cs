@@ -17,6 +17,9 @@ namespace HotelsR4U.Entities
         [ForeignKey (nameof (RoomPriceID))]
         public RoomPrice RoomPrice { get; set; } = null!;
 
+        //Lägger till en egenskap för extrabäddar.
+        public int ExtraBedRequested { get; set; }
+
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         

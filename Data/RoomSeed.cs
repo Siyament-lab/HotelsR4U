@@ -24,8 +24,9 @@ namespace HotelsR4U.Data
                         RoomNumber = $"{(hotel.HotelID)}0{i}",
                         // Bestämmer rumstyp baserat på typeIndex (1 = Single, 2 = Double, 0 = Svit)
                         RoomType = (typeIndex == 1) ? "Single" : (typeIndex == 2) ? "Double" : "Suite",
-                        RoomSize = (typeIndex == 1) ? "18sqm" : (typeIndex == 2) ? "25sqm" : "30sqm",
-                        ExtraBed = (typeIndex != 1), // Dubbelrum & Svit kan få en extrabädd, singelrum är exkluderat
+                        RoomSize = (typeIndex == 1) ? "18sqm" : (typeIndex == 2) ? "25sqm" : "60sqm",
+                        // Dubbelrum & Svit kan få en extrabädd, singelrum är exkluderat
+                        MaxExtraBeds = (typeIndex != 1) ? 1 : 0, 
                         HotelID = hotel.HotelID      // Detta skapar kopplingen mellan rum & Hotell i SQL
                     });
                 }

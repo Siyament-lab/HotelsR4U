@@ -21,7 +21,8 @@ namespace HotelsR4U.Entities
         [StringLength (20)]
         public string RoomSize { get; set; } = null!;
 
-        public bool ExtraBed { get; set; }
+        //Ändrat från bool till int för att kunna hantera fler ex.bäddar för ett större rum
+        public int MaxExtraBeds { get; set; }
 
         public ICollection<Booking> Bookings { get; set; } = new List<Booking> ();
         public ICollection<RoomPrice> RoomPrices { get; set; } = new List<RoomPrice> ();

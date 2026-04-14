@@ -33,18 +33,30 @@ namespace HotelsR4U.Seed
             dbContext.Rooms.AddRange (rooms);
             dbContext.SaveChanges ();
 
-            // 4. RoomPrice
+            //Hämtar sparade rum efter vi har sparat ändringar för entiteten Room.
             var savedRooms = dbContext.Rooms.ToList ();
+            
+            // 4. RoomPrice
             var roomPrices = RoomPriceSeed.ActualRoomPrices (savedRooms);
             dbContext.RoomPrices.AddRange (roomPrices);
             dbContext.SaveChanges ();
 
+            //Hämta sparade rum-priser efter sparandet.
+            var savedRoomPrices = dbContext.RoomPrices.ToList ();
             // 5. Guest
             var guests = GuestSeed.GetGuests (addresses);
             dbContext.Guests.AddRange (guests);
             dbContext.SaveChanges ();
 
-            // Fyller på med Booking & Invoice senare
+            //Hämta sparade gäster efter sparandet.
+            var savedGuests = dbContext.Guests.ToList ();
+
+            //Booking
+            var bookings = BookingSeed.GetBookings (savedGuests, savedRooms, savedRoomPrices);
+            dbContext.Bookings.AddRange (bookings);
+            dbContext.SaveChanges ();
+
+            // Fyller på med Invoice senare
 
             Console.WriteLine ("Seed klar!");
         }

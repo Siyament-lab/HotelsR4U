@@ -24,7 +24,7 @@ namespace HotelsR4U.Data
                     _ => 0m
                 },
 
-                ExtraBedPrice = r.ExtraBed ? 300m : 0m,
+                ExtraBedPrice = 300m
 
             }).ToList ();
         }
