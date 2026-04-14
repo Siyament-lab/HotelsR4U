@@ -8,13 +8,15 @@ namespace HotelsR4U.Seed
     {
         public static void Run ( HotelDbContext dbContext )
         {
+            //Om det redan finns data i någon av tabellerna,
+            //seedas inte de igen, annars seedas enligt ordningennedan
             if (dbContext.Addresses.Any () ||
                 dbContext.Hotels.Any () ||
                 dbContext.Guests.Any () ||
                 dbContext.Rooms.Any () ||
                 dbContext.RoomPrices.Any ())
             {
-                //Om det redan finns data i någon av tabellerna, seedas inte de igen, annars seedas enligt ordningennedan
+                
                 return;
             }
 
@@ -51,12 +53,6 @@ namespace HotelsR4U.Seed
             //Hämta sparade gäster efter sparandet.
             var savedGuests = dbContext.Guests.ToList ();
 
-            //Booking
-            var bookings = BookingSeed.GetBookings (savedGuests, savedRooms, savedRoomPrices);
-            dbContext.Bookings.AddRange (bookings);
-            dbContext.SaveChanges ();
-
-            // Fyller på med Invoice senare
 
             Console.WriteLine ("Seed klar!");
         }

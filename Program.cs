@@ -11,9 +11,14 @@ namespace HotelsR4U
             using (var dbContext = new HotelDbContext ())
             {
                 dbContext.Database.Migrate ();
-                SeedRunner.Run (dbContext);
+                //Kör seedRunner om det
+                //inte finns några hotell, rum eller gäster i databasen
+                if (!dbContext.Hotels.Any () && !dbContext.Rooms.Any () && !dbContext.Guests.Any ())
+                {
+                    SeedRunner.Run (dbContext);
+                }
 
-                Console.WriteLine ();
+                Console.WriteLine ("Programmet är klart!");
             }
 
             Console.ReadKey ();

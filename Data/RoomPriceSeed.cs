@@ -11,8 +11,8 @@ namespace HotelsR4U.Data
             return rooms.Select (r => new RoomPrice
             {
                 RoomID = r.RoomID,
-                ValidFrom = new DateTime(2026,1,1),
-                ValidTo = new DateTime(2026,12,31),
+                ValidFrom = new DateTime (2026, 1, 1),
+                ValidTo = new DateTime (2026, 12, 31),
 
                 // Sätter priset baserat på rumstypen, och extra säng tillägg
                 PricePerNight = r.RoomType

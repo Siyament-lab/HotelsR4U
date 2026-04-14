@@ -6,6 +6,7 @@ namespace HotelsR4U.Services
     public class RoomService
     {
         private readonly HotelDbContext _DbContext;
+        private readonly RelationGuardService _relationGuardService;
 
         public RoomService ( HotelDbContext dbContext )
         {
@@ -52,8 +53,9 @@ namespace HotelsR4U.Services
             _DbContext.SaveChanges ();
             return true;
         }
-        
-        // Uppdaterar ett befintligt rum i databasen,sedan sparar det i DB
+
+        // Uppdaterar ett befintligt rum &
+        // sätter max antal extrasängar baserad på storlek & typ
         public bool UpdateRoom ( Room room )
         {
             var existingRoom = _DbContext.Rooms.FirstOrDefault (r => r.RoomID == room.RoomID);
@@ -70,6 +72,21 @@ namespace HotelsR4U.Services
             _DbContext.SaveChanges ();
             return true;
         }
+        // Raderar ett rum, kontrollerar först att det inte finns bokningar kopplade till rummet
+        public void DeleteRoom ( int roomId )
+        {
+            var room = _DbContext.Rooms.FirstOrDefault (r => r.RoomID == roomId);
+            if (room == null)
+                throw new Exception ("Rummet finns inte.");
+
+            //Förhindra borttagning av rum som har bokningar kopplade till sig
+            _relationGuardService.EnsureRoomCanBeDeleted (roomId);
+
+
+            _DbContext.Rooms.Remove (room);
+            _DbContext.SaveChanges ();
+        }
+
         //Omvandlar sträng --> int för att kunna använda det i beräkningen av max antal extrasängar
         private int ParseRoomSize ( string roomSize )
         {

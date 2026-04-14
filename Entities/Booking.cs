@@ -21,7 +21,6 @@ namespace HotelsR4U.Entities
         //Lägger till en egenskap för extrabäddar.
         public int ExtraBedRequested { get; set; }
 
-        [Required]
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
 
