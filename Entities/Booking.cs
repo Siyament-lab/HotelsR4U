@@ -24,9 +24,9 @@ namespace HotelsR4U.Entities
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
 
-        public DateTime BookingDate { get; set; } = DateTime.Now;
+        public DateTime BookingDate { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public BookingStatus Status { get; set; } = BookingStatus.Pending;
+        public BookingStatus Status { get; set; }
 
 
 

@@ -12,6 +12,12 @@ namespace HotelsR4U.Services
         {
             _DbContext = dbContext;
         }
+        //Hämta alla rum
+        public List<Room> GetAllRooms ()
+        {
+            return _DbContext.Rooms.ToList ();
+        }
+
         //Skapar lista över tillgängliga rum baserat på hotellID och datumintervall
         public List<Room> GetAvailableRooms ( int hotelID, DateTime checkInDate, DateTime checkOutDate )
         {

@@ -16,7 +16,6 @@ namespace HotelsR4U.Contexts
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomPrice> RoomPrices { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
 
         #region Anteckningar viktigt
         
@@ -54,9 +53,9 @@ namespace HotelsR4U.Contexts
                 .Property(b => b.Status)
                 .HasConversion<int>();
 
-            modelBuilder.Entity<Invoice> ()
-                .Property (i => i.Amount)
-                .HasPrecision (18, 2);
+            //modelBuilder.Entity<Invoice> ()
+            //    .Property (i => i.Amount)
+            //    .HasPrecision (18, 2);
 
         }
 

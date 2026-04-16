@@ -12,7 +12,7 @@ namespace HotelsR4U.Entities
     {
         public int AddressID { get; set; }
         [StringLength(50)]
-        public string StreetName { get; set; }= null!;
+        public string StreetName { get; set; } = null!;
         [StringLength(10)]
         public string StreetNumber { get; set; }= null!;
         [StringLength(10)]
