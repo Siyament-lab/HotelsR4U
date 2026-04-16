@@ -24,13 +24,15 @@ namespace HotelsR4U
                 var hotelSevice = new HotelService (dbContext);
                 var guestService = new GuestService (dbContext);
                 var addressService = new AddressService (dbContext);
+                var roomPriceService = new RoomPriceService (dbContext);
                 var roomService = new RoomService (dbContext);
                 var bookingService = new BookingService (dbContext);
 
                 var menu = new Menu (
                     hotelSevice, 
                     guestService, 
-                    addressService, 
+                    addressService,
+                    roomPriceService,
                     roomService, 
                     bookingService);
                 menu.ShowMainMenu ();

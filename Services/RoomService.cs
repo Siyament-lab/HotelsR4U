@@ -11,6 +11,7 @@ namespace HotelsR4U.Services
         public RoomService ( HotelDbContext dbContext )
         {
             _DbContext = dbContext;
+            _relationGuardService = new RelationGuardService (dbContext);
         }
         //Hämta alla rum
         public List<Room> GetAllRooms ()
@@ -30,7 +31,7 @@ namespace HotelsR4U.Services
                     b.CheckOutDate > checkInDate))
                 .ToList ();
         }
-        // Beräknar max antal extrasängar baserat på rumstyp och storlek
+        // Beräknar max antal tillåtna extrasängar baserat på rumstyp och storlek
         public int CalculateMaxExtraBeds ( string roomType, int roomSize )
         {
             if (roomType == "Single")
@@ -51,13 +52,13 @@ namespace HotelsR4U.Services
         }
 
         // Lägger till ett nytt rum i databasen och sätter max antal extrasängar innan sparning
-        public bool AddRoom ( Room room )
+        public Room AddRoom ( Room room )
         {
             SetMaxExtraBeds (room);
 
             _DbContext.Rooms.Add (room);
             _DbContext.SaveChanges ();
-            return true;
+            return room;
         }
 
         // Uppdaterar ett befintligt rum &
@@ -78,7 +79,7 @@ namespace HotelsR4U.Services
             _DbContext.SaveChanges ();
             return true;
         }
-        // Raderar ett rum, kontrollerar först att det inte finns bokningar kopplade till rummet
+        // Radera ett rum
         public void DeleteRoom ( int roomId )
         {
             var room = _DbContext.Rooms.FirstOrDefault (r => r.RoomID == roomId);
@@ -87,6 +88,14 @@ namespace HotelsR4U.Services
 
             //Förhindra borttagning av rum som har bokningar kopplade till sig
             _relationGuardService.EnsureRoomCanBeDeleted (roomId);
+
+            //Ta bort först knutna rum-priser innan rummet tas bort
+            //för att undvika FK-relation problem
+            var roomPrices = _DbContext.RoomPrices.Where (rp => rp.RoomID == roomId).ToList ();
+            if(roomPrices.Any ())
+            {
+                _DbContext.RoomPrices.RemoveRange (roomPrices);
+            }
 
 
             _DbContext.Rooms.Remove (room);

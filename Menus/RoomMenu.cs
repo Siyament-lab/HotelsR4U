@@ -7,8 +7,10 @@ namespace HotelsR4U.Menus
     {
         private readonly RoomService _roomService;
         private readonly RoomPriceService _roomPriceService;
+        private readonly RelationGuardService _relationGuardService;
+        private RoomPriceService? roomPriceService;
 
-        public RoomMenu ( RoomService roomService, RoomPriceService roomPriceService )
+        public RoomMenu ( RoomService roomService, RoomPriceService roomPriceService)
         {
             _roomService = roomService;
             _roomPriceService = roomPriceService;
@@ -18,7 +20,7 @@ namespace HotelsR4U.Menus
 
         protected override void ShowAll ()
         {
-            Console.Clear ();
+            //Console.Clear ();
             var rooms = _roomService.GetAllRooms ();
 
             foreach (var room in rooms)
@@ -64,7 +66,7 @@ namespace HotelsR4U.Menus
 
             var roomPrice = new RoomPrice
             {
-                //RumID angens auto av db, så vi behöver inte sätta det här
+                RoomID = createdRoom.RoomID,
                 PricePerNight = pricePerNight,
                 ExtraBedPrice = extraBedPrice,
                 ValidFrom = DateTime.Today,

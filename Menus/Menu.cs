@@ -9,27 +9,42 @@ namespace HotelsR4U.Menus
         private readonly AddressMenu _addressMenu;
         private readonly RoomMenu _roomMenu;
         private readonly BookingMenu _bookingMenu;
+        //private HotelService _HotelSevice;
+        //private GuestService _GuestService;
+        //private AddressService _AddressService;
+        //private RoomService _RoomService;
+        //private BookingService _BookingService;
+        
+
+        //public Menu ( HotelService hotelSevice, GuestService guestService, AddressService addressService, RoomService roomService, BookingService bookingService )
+        //{
+        //    _HotelSevice = hotelSevice;
+        //    _GuestService = guestService;
+        //    _AddressService = addressService;
+        //    _RoomService = roomService;
+        //    _BookingService = bookingService;
+        //}
 
         public Menu (
             HotelService hotelService,
             GuestService guestService,
             AddressService addressService,
+            RoomPriceService roomPriceService,
             RoomService roomService,
-            //RoomPriceService roomPriceService,
             BookingService bookingService )
         {
             _hotelMenu = new HotelMenu (hotelService);
             _guestMenu = new GuestMenu (guestService);
             _addressMenu = new AddressMenu (addressService);
-           // _roomMenu = new RoomMenu (roomService, roomPriceService);
+            _roomMenu = new RoomMenu (roomService, roomPriceService);
             _bookingMenu = new BookingMenu (bookingService);
         }
 
         public void ShowMainMenu ()
         {
-            bool running = true;
+            bool mainMenuRunning = true;
 
-            while (running)
+            while (mainMenuRunning)
             {
                 Console.Clear ();
                 Console.WriteLine ("=== HotelsR4U ===");
@@ -62,11 +77,10 @@ namespace HotelsR4U.Menus
                         _bookingMenu.ShowMenu ();
                         break;
                     case "0":
-                        running = false;
+                        mainMenuRunning = false;
                         break;
                     default:
                         Console.WriteLine ("Ogiltigt val. Tryck valfri tangent för att fortssätta!");
-                        Console.ReadKey ();
                         break;
                 }
             }

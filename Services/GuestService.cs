@@ -10,7 +10,6 @@ namespace HotelsR4U.Services
         public GuestService ( HotelDbContext dbContext )
         {
             _dbContext = dbContext;
-            _relationGuardService = new RelationGuardService (dbContext);
         }
         // Hämtar alla gäster från databasen
         public List<Guest> GetAllGuests ()
