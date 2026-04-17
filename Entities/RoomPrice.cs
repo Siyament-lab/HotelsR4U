@@ -25,7 +25,7 @@ namespace HotelsR4U.Entities
         [ForeignKey (nameof (RoomID))]
         public Room Room { get; set; } = null!;
 
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking> ();
+        //public ICollection<Booking> Bookings { get; set; } = new List<Booking> ();
 
     }
 }
