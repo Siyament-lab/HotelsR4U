@@ -37,7 +37,7 @@ namespace HotelsR4U
                 menu.ShowMainMenu ();
 
             }
-            //Kvar att justera: ("bokningar kvar att rätta till logik för uppdatering och borttagningar")..
+           
         }
     }
 }
