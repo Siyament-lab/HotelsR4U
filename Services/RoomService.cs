@@ -31,24 +31,31 @@ namespace HotelsR4U.Services
                     b.CheckOutDate > checkInDate))
                 .ToList ();
         }
-        // Beräknar max antal tillåtna extrasängar baserat på rumstyp och storlek
-        public int CalculateMaxExtraBeds ( string roomType, int roomSize )
-        {
-            if (roomType == "Single")
-                return 0;
 
-            if ((roomType == "Double" || roomType == "Suite") && roomSize >= 40)
-                return 2;
-
-            if ((roomType == "Double" || roomType == "Suite") && roomSize >= 30)
-                return 1;
-
-            return 0;
-        }
         // Sätter max antal extrasängar för ett rum baserat på dess typ och storlek
         public void SetMaxExtraBeds ( Room room )
         {
-            room.MaxExtraBeds = CalculateMaxExtraBeds (room.RoomType, ParseRoomSize (room.RoomSize));
+            var roomSize = ParseRoomSize (room.RoomSize);
+
+            if (room.RoomType == "Single")
+            {
+                room.MaxExtraBeds = 0;
+                return;
+            }
+
+            if ((room.RoomType == "Double" || room.RoomType == "Suite") && roomSize >= 40)
+            {
+                room.MaxExtraBeds = 2;
+                return;
+            }
+
+            if ((room.RoomType == "Double" || room.RoomType == "Suite") && roomSize >= 30)
+            {
+                room.MaxExtraBeds = 1;
+                return;
+            }
+
+            room.MaxExtraBeds = 0;
         }
 
         // Lägger till ett nytt rum i databasen och sätter max antal extrasängar innan sparning
@@ -63,12 +70,11 @@ namespace HotelsR4U.Services
 
         // Uppdaterar ett befintligt rum &
         // sätter max antal extrasängar baserad på storlek & typ
-        public bool UpdateRoom ( Room room )
+        public void UpdateRoom ( Room room )
         {
             var existingRoom = _DbContext.Rooms.FirstOrDefault (r => r.RoomID == room.RoomID);
             if (existingRoom == null)
-                return false;
-
+                return;
             existingRoom.RoomNumber = room.RoomNumber;
             existingRoom.RoomType = room.RoomType;
             existingRoom.RoomSize = room.RoomSize;
@@ -77,7 +83,7 @@ namespace HotelsR4U.Services
             SetMaxExtraBeds (existingRoom);
 
             _DbContext.SaveChanges ();
-            return true;
+            return;
         }
         // Radera ett rum
         public void DeleteRoom ( int roomId )

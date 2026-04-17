@@ -8,13 +8,12 @@ namespace HotelsR4U.Services
     public class RoomPriceService
     {
         private readonly HotelDbContext _dbContext;
-        private readonly RoomService _roomService;
         private readonly RelationGuardService _relationGuardService;
 
         public RoomPriceService ( HotelDbContext dbContext )
         {
             _dbContext = dbContext;
-            _roomService = new RoomService (dbContext);
+            _relationGuardService = new RelationGuardService (dbContext);
         }
         //Hämta alla priser för alla rum
         public List<RoomPrice> GetCurrentRoomPrices ()

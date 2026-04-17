@@ -7,10 +7,12 @@ namespace HotelsR4U.Menus
     public class HotelMenu : MenuBase
     {
         private readonly HotelService _hotelService;
+        private readonly AddressService _addressService;
 
-        public HotelMenu ( HotelService hotelService )
+        public HotelMenu ( HotelService hotelService, AddressService addressService )
         {
             _hotelService = hotelService;
+            _addressService = addressService;
         }
 
         protected override string GetMenuTitle () => "--- Hotellmeny ---";
@@ -41,23 +43,22 @@ namespace HotelsR4U.Menus
             Console.Write ("Ange telefon: ");
             var phone = Console.ReadLine ();
 
-            ////AddressID väljs av db. Ge möjlighet till antingen att välja
-            ////en befintlig eller att skapa en ny adress i AddressMenu
-            ////eller casta så användaren skapar ny address
-            //Console.Write ("Ange AddressID: ");
-            //int addressId = int.Parse (Console.ReadLine ()!);
+            Console.WriteLine ("\n--- Lägg till adress för hotellet ---");
+            var address = PromptAddress (HotelsR4U.Enums.AddressType.Hotel);
+
+            var createdAddress = _addressService.AddAddress (address);
 
             var hotel = new Hotel
             {
                 HotelName = hotelName!,
                 Email = email!,
                 Phone = phone!,
-                //AddressID = addressId
+                AddressID = createdAddress.AddressID
             };
 
             _hotelService.AddHotel (hotel);
 
-            Console.WriteLine ("Hotell tillagt.");
+            Console.WriteLine ("Nytt Hotell och adress tillaga.");
             Pause ();
         }
 
@@ -77,8 +78,8 @@ namespace HotelsR4U.Menus
             Console.Write ("Ange ny telefon: ");
             var phone = Console.ReadLine ();
 
-            Console.Write ("Ange nytt AddressID: ");
-            int addressId = int.Parse (Console.ReadLine ()!);
+            //Console.Write ("Ange nytt AddressID: ");
+            //int addressId = int.Parse (Console.ReadLine ()!);
 
             var hotel = new Hotel
             {
@@ -86,7 +87,7 @@ namespace HotelsR4U.Menus
                 HotelName = hotelName!,
                 Email = email!,
                 Phone = phone!,
-                AddressID = addressId
+                //ddressID = addressId
             };
 
             _hotelService.UpdateHotel (hotel);

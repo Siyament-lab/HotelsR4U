@@ -1,4 +1,7 @@
-﻿namespace HotelsR4U.Menus
+﻿using HotelsR4U.Entities;
+using HotelsR4U.Enums;
+
+namespace HotelsR4U.Menus
 {
     public abstract class MenuBase
     {
@@ -56,6 +59,33 @@
         {
             Console.WriteLine ("\nTryck valfri tangent för att fortsätta...");
             Console.ReadKey ();
+        }
+        protected Address PromptAddress ( AddressType addressType )
+        {
+            Console.Write ("Gatunamn: ");
+            var streetName = Console.ReadLine ();
+
+            Console.Write ("Gatunummer: ");
+            var streetNumber = Console.ReadLine ();
+
+            Console.Write ("Postnummer: ");
+            var postalCode = Console.ReadLine ();
+
+            Console.Write ("Stad: ");
+            var city = Console.ReadLine ();
+
+            Console.Write ("Land: ");
+            var country = Console.ReadLine ();
+
+            return new Address
+            {
+                StreetName = streetName!,
+                StreetNumber = streetNumber!,
+                PostalCode = postalCode!,
+                City = city!,
+                Country = country!,
+                AddressType = addressType
+            };
         }
     }
 }

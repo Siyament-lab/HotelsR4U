@@ -1,5 +1,6 @@
 ﻿using HotelsR4U.Contexts;
 using HotelsR4U.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelsR4U.Services
 {
@@ -10,6 +11,7 @@ namespace HotelsR4U.Services
         public GuestService ( HotelDbContext dbContext )
         {
             _dbContext = dbContext;
+            _relationGuardService = new RelationGuardService (dbContext);
         }
         // Hämtar alla gäster från databasen
         public List<Guest> GetAllGuests ()
@@ -38,16 +40,26 @@ namespace HotelsR4U.Services
             return true;
         }
         // Tar bort en gäst från databasen efter att ha kontrollerat relationer
-        public bool DeleteGuest ( int guestID )
+        public void DeleteGuest ( int guestID )
         {
             var guest = _dbContext.Guests.FirstOrDefault (g => g.GuestID == guestID);
             if (guest == null)
-                return false;
+                return;
             _relationGuardService.EnsureGuestCanBeDeleted (guestID);
+
+            var addressId = guest.AddressID;
 
             _dbContext.Guests.Remove (guest);
             _dbContext.SaveChanges ();
-            return true;
+            return;
+
+            var guestDelete = _dbContext.Guests.Where (gd => gd.GuestID == guestID).ToList ();
+            if (guestDelete.Any ())
+            {
+                _dbContext.Guests.RemoveRange (guestDelete);
+                _dbContext.SaveChanges ();
+
+            }
         }
     }
 }

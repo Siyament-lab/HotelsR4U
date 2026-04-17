@@ -9,7 +9,7 @@ namespace HotelsR4U.Services
     {
         private readonly HotelDbContext _dbContext;
         private readonly RoomService _roomService;
-        private BookingStatus _bookingStatus;
+        private readonly BookingStatus _bookingStatus;
 
         public BookingService ( HotelDbContext dbContext )
         {

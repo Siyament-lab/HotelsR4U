@@ -8,7 +8,6 @@ namespace HotelsR4U.Menus
         private readonly RoomService _roomService;
         private readonly RoomPriceService _roomPriceService;
         private readonly RelationGuardService _relationGuardService;
-        private RoomPriceService? roomPriceService;
 
         public RoomMenu ( RoomService roomService, RoomPriceService roomPriceService)
         {

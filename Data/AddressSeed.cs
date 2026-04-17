@@ -1,6 +1,5 @@
 ﻿using HotelsR4U.Entities;
 using HotelsR4U.Enums;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HotelsR4U.Data

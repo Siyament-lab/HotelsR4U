@@ -1,6 +1,5 @@
 ﻿using HotelsR4U.Contexts;
 using HotelsR4U.Data;
-using System.Linq;
 
 namespace HotelsR4U.Seed
 {

@@ -13,13 +13,12 @@ namespace HotelsR4U
             using (var dbContext = new HotelDbContext ())
             {
                 dbContext.Database.Migrate ();
-                ////Kör seedRunner om det
-                ////inte finns några hotell, rum eller gäster i databasen
-                //if (!dbContext.Hotels.Any () && !dbContext.Rooms.Any () && !dbContext.Guests.Any ())
-                //{
-                //    SeedRunner.Run (dbContext);
-                //}
-
+                //Kör seedRunner om det
+                //inte finns några hotell, rum eller gäster i databasen
+                if (!dbContext.Hotels.Any () && !dbContext.Rooms.Any () && !dbContext.Guests.Any ())
+                {
+                    SeedRunner.Run (dbContext);
+                }
 
                 var hotelSevice = new HotelService (dbContext);
                 var guestService = new GuestService (dbContext);
@@ -37,10 +36,8 @@ namespace HotelsR4U
                     bookingService);
                 menu.ShowMainMenu ();
 
-               // Console.WriteLine ("Programmet är klart!");
             }
-
-            //Console.ReadKey ();
+            //Kvar att justera: ("bokningar kvar att rätta till logik för uppdatering och borttagningar")..
         }
     }
 }

@@ -33,8 +33,8 @@ namespace HotelsR4U.Menus
             RoomService roomService,
             BookingService bookingService )
         {
-            _hotelMenu = new HotelMenu (hotelService);
-            _guestMenu = new GuestMenu (guestService);
+            _hotelMenu = new HotelMenu (hotelService, addressService);
+            _guestMenu = new GuestMenu (guestService, addressService);
             _addressMenu = new AddressMenu (addressService);
             _roomMenu = new RoomMenu (roomService, roomPriceService);
             _bookingMenu = new BookingMenu (bookingService);

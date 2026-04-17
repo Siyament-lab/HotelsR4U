@@ -8,10 +8,12 @@ namespace HotelsR4U.Menus
     {
         private readonly GuestService _guestService;
         private readonly RelationGuardService _relationGuardService;
+        private readonly AddressService _addressService;
 
-        public GuestMenu ( GuestService guestService )
+        public GuestMenu ( GuestService guestService, AddressService addressService )
         {
             _guestService = guestService;
+            _addressService = addressService;
         }
 
         protected override string GetMenuTitle () => "--- Gästmeny ---";
@@ -45,9 +47,10 @@ namespace HotelsR4U.Menus
             Console.Write ("Telefon: ");
             var phone = Console.ReadLine ();
 
-            ////Väljs automatiskt av db, för extra funktion se HotelMenu-->Add
-            //Console.Write ("AddressID: ");
-            //int addressId = int.Parse (Console.ReadLine ()!);
+            Console.WriteLine ("\n--- Lägg till adress för gästen ---");
+            var address = PromptAddress (HotelsR4U.Enums.AddressType.Guest);
+
+            var createdAddress = _addressService.AddAddress (address);
 
             var guest = new Guest
             {
@@ -55,12 +58,12 @@ namespace HotelsR4U.Menus
                 LastName = lastName!,
                 Email = email!,
                 Phone = phone!,
-               // AddressID = addressId
+                AddressID = createdAddress.AddressID
             };
 
             _guestService.AddGuest (guest);
 
-            Console.WriteLine ("Gäst tillagd.");
+            Console.WriteLine ("Ny gäst och adress tillagd.");
             Pause ();
         }
 

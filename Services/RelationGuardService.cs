@@ -18,7 +18,7 @@ public class RelationGuardService
     public void EnsureHotelCanBeDeleted ( int hotelID )
     {
         if (_dbContext.Rooms.Any (r => r.HotelID == hotelID))
-            throw new Exception ("Hotellet får ej raderas, det är kopplad till andra entiteter.");
+            throw new Exception ("Hotellet får ej raderas, det är kopplad till rum.");
     }
     //Address knuten till hotell eller gäst
     public void EnsureAddressCanBeDeleted ( int addressID )

@@ -77,6 +77,9 @@ namespace HotelsR4U.Menus
 
             Console.Write ("Ny gata: ");
             var street = Console.ReadLine ();
+            
+            Console.Write ("Gatu nummer: ");
+            var streetNumber = Console.ReadLine ();
 
             Console.Write ("Nytt postnummer: ");
             var postalCode = Console.ReadLine ();
@@ -91,6 +94,7 @@ namespace HotelsR4U.Menus
             {
                 AddressID = id,
                 StreetName = street!,
+                StreetNumber = streetNumber,
                 PostalCode = postalCode!,
                 City = city!,
                 Country = country!
