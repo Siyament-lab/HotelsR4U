@@ -20,11 +20,14 @@ namespace HotelsR4U.Entities
 
         //Lägger till en egenskap för extrabäddar.
         public int ExtraBedRequested { get; set; }
-
+        [Column(TypeName="Date")]
         public DateTime CheckInDate { get; set; }
+        [Column(TypeName="Date")]
         public DateTime CheckOutDate { get; set; }
-
+        
+        [Column(TypeName="Date")]
         public DateTime BookingDate { get; set; }
+        [Column(TypeName="Date")]
         public DateTime? PaymentDate { get; set; }
         public BookingStatus Status { get; set; }
 

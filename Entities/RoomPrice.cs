@@ -15,8 +15,9 @@ namespace HotelsR4U.Entities
 
         [Column (TypeName = "decimal(10,2)")]
         public decimal ExtraBedPrice { get; set; }
-
+        [Column (TypeName = "Date")]
         public DateTime ValidFrom { get; set; }
+        [Column (TypeName = "Date")]
         public DateTime ValidTo { get; set; }
 
         //Kopplar ihop med rummet
